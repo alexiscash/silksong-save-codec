@@ -1,22 +1,18 @@
-import base64
 from pathlib import Path
+import base64
+import zlib
 
-save_path = Path("saves/user2.dat")
-
-raw = save_path.read_bytes()
-
-print("file size:", len(raw))
-print("first 64 bytes:")
-print(raw[:64])
-print("\nprintable preview:")
-print(raw[:200].decode(errors="replace"))
-
+payload = Path("saves/payload.b64").read_bytes()
+decoded = base64.b64decode(payload)
 
 try:
-    decoded = base64.b64decode(raw, validate=True)
-    print("\nbase64 decode: SUCCESS")
-    print("Decoded length:", len(decoded))
-    print("Decoded first 16 bytes:", decoded[:16])
+    decompressed = zlib.decompress(decoded, wbits=-15)
+    print("Raw DEFLATE decompression succeeded!")
+    print("Decompressed size:", len(decompressed))
+    print("Preview:")
+    print(decompressed[:300].decode(errors="replace"))
+
+    Path("saves/decompressed.bin").write_bytes(decompressed)
 except Exception as e:
-    print("\nbase64 decode: FAIL")
+    print("Raw DEFLATE decompression failed:")
     print(e)
