@@ -2,4 +2,6 @@ __pycache__/
 *.pyc
 .env
 
-.venv
+.venv/
+
+silksong_save_codec.egg-info/

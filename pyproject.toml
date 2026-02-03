@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "silksong-save-codec"
+version = "0.1.0"
+description = "Silksong save file encoder/decoding"
+requires-python = ">=3.9"
+dependencies = [
+    "pycryptodome"
+]
+
+[project.scripts]
+silksong = "scripts.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["scripts"]
