@@ -1,6 +1,6 @@
 from pathlib import Path
 import argparse
-from scripts.codec import decrypt, encrypt, save_dat_file, save_json
+from src.silksong.codec import decrypt, encrypt, save_dat_file, save_json
 
 
 def main():

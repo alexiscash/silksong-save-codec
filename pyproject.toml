@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-silksong = "scripts.cli:main"
+silksong = "src.silksong.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["scripts"]
+include = ["src.silksong"]
