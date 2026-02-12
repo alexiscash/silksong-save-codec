@@ -3,6 +3,7 @@ import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad, pad
 import json
+from typing import Any
 
 CSHARP_HEADER = bytes([0, 1, 0, 0, 0, 255, 255, 255,
                        255, 1, 0, 0, 0, 0, 0, 0, 0, 6, 1, 0, 0, 0])
@@ -61,15 +62,14 @@ def encrypt(json_str: dict) -> bytes:
     )
 
 
-def save_json(obj: str, path: Path | str = 'saves/user2.json') -> None:
-    with open(path, 'w') as f:
-        json.dump(obj, f, ensure_ascii=False)
+def save_json(obj: Any, path: Path = Path('saves/user2.json')) -> None:
+    path.write_text(json.dumps(obj, ensure_ascii=False))
 
 
-def save_dat_file(final_bytes: bytes, path: Path | str) -> None:
-    Path(path).write_bytes(final_bytes)
+def save_dat_file(final_bytes: bytes, path: Path) -> None:
+    path.write_bytes(final_bytes)
 
 
 if __name__ == "__main__":
     raw = Path('saves/user2.dat').read_bytes()
-    save_json(decrypt(raw))
+    save_json(decrypt(raw), Path("saves/user4.json"))
