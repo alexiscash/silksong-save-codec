@@ -10,7 +10,7 @@ CSHARP_HEADER = bytes([0, 1, 0, 0, 0, 255, 255, 255,
 AES_KEY_STRING = "UKu52ePUBwetZ9wNX88o54dnfKRu0T1l"
 
 
-def decrypt(payload: bytes) -> str:  # JSON
+def decrypt(payload: bytes) -> dict:  # JSON
 
     without_header = payload[len(CSHARP_HEADER):-1]
 
@@ -31,7 +31,7 @@ def decrypt(payload: bytes) -> str:  # JSON
     return json.loads(unpadded)
 
 
-def encrypt(json_str: dict) -> bytes:
+def encrypt(json_str: str) -> bytes:
     json_bytes = json.dumps(json_str, ensure_ascii=False).encode()
 
     cipher = AES.new(AES_KEY_STRING.encode(), AES.MODE_ECB)
@@ -71,5 +71,5 @@ def save_dat_file(final_bytes: bytes, path: Path) -> None:
 
 
 if __name__ == "__main__":
-    raw = Path('saves/user2.dat').read_bytes()
-    save_json(decrypt(raw), Path("saves/user4.json"))
+    data = encrypt(json.loads(Path('saves/user2.json').read_text()))
+    save_dat_file(data, Path('saves/user2.dat'))
